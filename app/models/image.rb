@@ -6,4 +6,8 @@ class Image < ActiveRecord::Base
     timestamps
   end
   
+  def url
+    
+  end
+  
 end

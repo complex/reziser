@@ -5,6 +5,9 @@
   margin: 0
   padding: 0
 
+html
+  background: #fff
+
 body
   padding: 100px
   font:
@@ -12,7 +15,51 @@ body
     size: 21px
 
 h1
+  margin-bottom: 40px
   font-size: 44px
+  a
+    border-bottom-width: 5px
 
 p
+  color: #666
+
+a
+  font-weight: bold
+  text-decoration: none
+  color: #cc9933
+  border-bottom: solid 2px
+
+hr
+  margin: 40px 0
+  border: none
+  border-top: solid 1px #ccc
+
+form
   margin-top: 20px
+
+input
+  font:
+    family: 'helvetica neue', 'arial', sans-serif
+    size: 21px
+
+input[type=text]
+  padding: 5px
+  outline: none
+  border: solid 1px #ccc
+  &::-webkit-input-placeholder
+    color: #bbb
+  &:focus
+    color: #cc9933
+    border-color: #cc9933
+    &::-webkit-input-placeholder
+      color: #cc9933
+
+input[type=submit]
+  cursor: pointer
+  min-width: 100px
+  padding: 6px
+  text-align: left
+  font-size: 21px
+  color: #fff
+  background: #cc9933
+  border: none

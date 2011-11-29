@@ -1,3 +1,8 @@
 #images.index
+  
   %h1 Reziser
-  %p Reziser is an image resizing service. Give us an image and a size and we'll do the hard work.
+  %p Reziser is an image resizing and hosting service. #{ link_to "Give us an image", new_image_path } and we'll do the hard work.
+  %hr
+  %ul
+    - for image in @images
+      %li= link_to image.id, image

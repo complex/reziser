@@ -1,0 +1,7 @@
+#images.new
+  
+  %h1 #{ link_to "Reziser", root_path } / New
+  = form_for @image do |form|
+    = form.text_field :origin, placeholder: "URL"
+    = form.text_field :size, placeholder: "Size"
+    = form.submit "Do it"

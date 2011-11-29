@@ -1,0 +1,5 @@
+#images.show
+  
+  %h1 #{ link_to "Reziser", root_path } / #{ @image.id }
+  %p= image_tag @image.origin
+  %p= File.extname @image.origin
