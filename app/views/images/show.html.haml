@@ -1,5 +1,11 @@
 #images.show
   
   %h1 #{ link_to "Reziser", root_path } / #{ @image.id }
-  %p= image_tag @image.origin
-  %p= File.extname @image.origin
+  %p= image_tag @image.url
+  %dl
+    %dt Origin image
+    %dd= @image.origin
+    %dt Requested size
+    %dd= @image.size
+    %dt Result size
+    %dd #{ @image.width }x#{ @image.height }

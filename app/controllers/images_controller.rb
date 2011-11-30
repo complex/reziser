@@ -1,5 +1,4 @@
-require 'open-uri'
-require 'rmagick'
+require 'aws/s3'
 
 class ImagesController < ApplicationController
   
@@ -10,9 +9,6 @@ class ImagesController < ApplicationController
   def show
     
     @image = Image.find params[:id]
-    
-    url = @image.origin
-    file = Magick::Image.from_blob open(url).read
     
   end
   
