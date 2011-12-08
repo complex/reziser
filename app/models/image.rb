@@ -65,14 +65,16 @@ class Image < ActiveRecord::Base
     }
     
     existing = Image.where(search_params).first
-    image = Image.new(params)
     
     if existing
       existing
-    elsif image.save
-      image
-    else  
-      false
+    else
+      image = Image.new(params)
+      if image.save
+        image
+      else  
+        false
+      end
     end
     
   end
