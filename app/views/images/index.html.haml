@@ -1,8 +1,9 @@
 #images.index
   
   %h1 Reziser
-  %p Reziser is an image resizing and hosting service. #{ link_to "Give us an image", new_image_path } and we'll do the hard work.
-  %hr
-  %ul
-    - for image in @images
-      %li= link_to image.id, image
+  %p Reziser is an image resizing and hosting service. #{ link_to "Add an image", new_image_path }.
+  - if @images.present?
+    %hr
+    %ul
+      - for image in @images
+        %li= link_to reziser_image_tag(image.origin, '100x100', crop: true, private: true), image

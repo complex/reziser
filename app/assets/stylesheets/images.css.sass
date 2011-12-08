@@ -1,3 +1,5 @@
+@import mixins
+
 #images
   
   &.index
@@ -5,33 +7,35 @@
       padding: 0
     li
       float: left
-      list-style-type: none
+      list-style: none
       a
-        display: block
-        width: 60px
-        height: 60px
-        padding: 20px
         border: none
-        &:hover
-          color: #fff
-          background: #cc9933
+      img
+        display: block
+        width: 100px
+        height: 100px
   
   &.new
-    input[type=text]
-      margin-right: 4px
-    #image_origin
-      width: 400px
-    #image_size
-      width: 200px
+    h1
+      margin-bottom: 74px
   
   &.show
+    p
+      @include clear
+      a
+        float: left
+        border: none
+    img
+      display: block
     dl
-      margin-top: 20px
+      margin-top: 40px
       font-size: 13px
     dt, dd
       line-height: 21px
     dt
       display: block
       float: left
-      width: 150px
+      width: 80px
       font-weight: bold
+    dd
+      margin-left: 100px

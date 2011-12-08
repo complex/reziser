@@ -2,6 +2,20 @@
   
   %h1 #{ link_to "Reziser", root_path } / New
   = form_for @image do |form|
-    = form.text_field :origin, placeholder: "URL"
-    = form.text_field :size, placeholder: "Size"
-    = form.submit "Do it"
+    .field
+      = form.label :origin, "URL"
+      = form.text_field :origin
+    .field
+      = form.label :size
+      = form.text_field :size
+    .field.checkbox
+      = form.label :crop
+      .container
+        = form.check_box :crop
+        = form.label :crop, "Crop this image to fill the specified size"
+    .field.checkbox
+      = form.label :private, "Privacy"
+      .container
+        = form.check_box :private
+        = form.label :private, "Hide this image from the home page"
+    = form.submit "Create"

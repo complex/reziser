@@ -5,39 +5,76 @@ class Image < ActiveRecord::Base
     size          :string, validates: [ :presence ]
     width         :integer
     height        :integer
+    private       :boolean, default: false
+    crop          :boolean, default: false
     timestamps
   end
   
-  after_save :generate, unless: :width_and_height_exist?
+  before_save :generate
+  after_destroy :remove
   
   def generate
     
-    # open image from url
-    image = Magick::Image.from_blob(open(origin).read).first
+    blob = open(origin).read
+    image = Magick::Image.from_blob(blob).first
     
-    # resize
-    image.change_geometry(size){ |width, height, image|
-      image.resize! width, height
-    }
+    if crop
+      
+      base_size = size.gsub(/\W/, '').split('x')
+      width = base_size.first.to_i
+      height = base_size.second.to_i
+      
+      image.resize_to_fill! width, height
+      
+    else
     
-    # save width and height
-    self.update_attributes width: image.x_resolution, height: image.y_resolution
+      image.change_geometry(size){ |width, height, image|
+        image.resize! width, height
+      }
+      
+    end
     
-    # send to s3
+    self.width = image.columns
+    self.height = image.rows
+    
     AWS::S3::S3Object.store filename, image.to_blob, Image.bucket, access: :public_read
     
   end
   
-  def width_and_height_exist?
-    width and height
+  def remove
+    AWS::S3::S3Object.delete filename, Image.bucket
+  end
+  
+  def hash
+    Digest::SHA1.hexdigest "#{ origin }#{ width }#{ height }"
   end
   
   def filename
-    "#{ id }#{ File.extname origin }"
+    "#{ hash }#{ File.extname origin }"
   end
   
   def url
     "http://s3.amazonaws.com/#{ Image.bucket }/#{ filename }"
+  end
+  
+  def self.find_or_create params
+    
+    search_params = { crop: false }.merge! params
+    search_params.select!{ |key, value|
+      [ :origin, :size, :crop ].include? key.to_sym
+    }
+    
+    existing = Image.where(search_params).first
+    image = Image.new(params)
+    
+    if existing
+      existing
+    elsif image.save
+      image
+    else  
+      false
+    end
+    
   end
   
   def self.bucket
@@ -46,7 +83,7 @@ class Image < ActiveRecord::Base
   
   def self.generate_all
     for image in Image.all do
-      image.update_attributes width: nil, height: nil
+      image.generate
     end
   end
   

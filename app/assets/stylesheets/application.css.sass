@@ -1,6 +1,8 @@
 //= require_self
 //= require_tree .
 
+@import mixins
+
 *
   margin: 0
   padding: 0
@@ -15,7 +17,7 @@ body
     size: 21px
 
 h1
-  margin-bottom: 40px
+  margin-bottom: 80px
   font-size: 44px
   a
     border-bottom-width: 5px
@@ -34,15 +36,13 @@ hr
   border: none
   border-top: solid 1px #ccc
 
-form
-  margin-top: 20px
-
 input
   font:
     family: 'helvetica neue', 'arial', sans-serif
     size: 21px
 
 input[type=text]
+  width: 400px
   padding: 5px
   outline: none
   border: solid 1px #ccc
@@ -57,9 +57,30 @@ input[type=text]
 input[type=submit]
   cursor: pointer
   min-width: 100px
-  padding: 6px
-  text-align: left
-  font-size: 21px
+  margin: 40px 0 0 150px
+  padding: 6px 20px
+  text-align: center
+  font:
+    size: 21px
+    weight: bold
   color: #fff
   background: #cc9933
   border: none
+
+.field
+  @include clear
+  margin-top: 20px
+  > label
+    display: block
+    float: left
+    width: 150px
+    margin-top: 6px
+    font-weight: bold
+  &.checkbox
+    > label
+      margin-top: 0 !important
+    input[type=checkbox]
+      position: relative
+      top: -3px
+    .container label
+      padding-left: 5px

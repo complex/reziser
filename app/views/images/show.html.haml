@@ -1,11 +1,14 @@
 #images.show
   
   %h1 #{ link_to "Reziser", root_path } / #{ @image.id }
-  %p= image_tag @image.url
-  %dl
-    %dt Origin image
-    %dd= @image.origin
-    %dt Requested size
-    %dd= @image.size
-    %dt Result size
-    %dd #{ @image.width }x#{ @image.height }
+  %p= link_to image_tag(@image.url, width: @image.width, height: @image.height), @image.origin
+  - if params[:info]
+    %dl
+      %dt Origin
+      %dd= link_to @image.origin, @image.origin
+      %dt Size
+      %dd= @image.size
+      %dt Crop
+      %dd= @image.crop ? "Yes" : "No"
+      %dt Result
+      %dd #{ @image.width }x#{ @image.height }
